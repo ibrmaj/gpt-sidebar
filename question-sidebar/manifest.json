@@ -1,0 +1,19 @@
+{
+    "manifest_version": 3,
+    "name": "Question Sidebar for AI Chats",
+    "version": "1.0.0",
+    "description": "Auto-collect your questions in a sidebar and jump to them in the chat.",
+    "permissions": ["storage"],
+    "content_scripts": [
+      {
+        "matches": [
+          "https://chat.openai.com/*",
+          "https://chatgpt.com/*"
+        ],
+        "js": ["content.js"],
+        "css": ["styles.css"],
+        "run_at": "document_idle"
+      }
+    ]
+  }
+  
