@@ -17,6 +17,22 @@
     overflow: hidden;
     resize: horizontal;
   }
+
+  /* Light theme overrides (applied when documentElement has .qsb-light) */
+  .qsb-light #qsb-sidebar {
+    background: #ffffff;
+    color: #0b1220;
+    border-left: 1px solid #e5e7eb;
+    box-shadow: -8px 0 16px rgba(0,0,0,0.08);
+  }
+  .qsb-light #qsb-header { background: #f9fafb; border-bottom: 1px solid #e5e7eb; }
+  .qsb-light .qsb-btn { background: #f3f4f6; border: 1px solid #e5e7eb; color: #111827; }
+  .qsb-light .qsb-btn:hover { background: #e5e7eb; }
+  .qsb-light #qsb-list { background: transparent; }
+  .qsb-light .qsb-item { background: #ffffff; border: 1px solid #e5e7eb; }
+  .qsb-light .qsb-item:hover { background: #f9fafb; border-color: #d1d5db; }
+  .qsb-light .qsb-item .qsb-meta { color: #6b7280; }
+  .qsb-light .qsb-footer { background: #f9fafb; border-top: 1px solid #e5e7eb; color: #4b5563; }
   
   /* Header */
   #qsb-header {

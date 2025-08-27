@@ -86,7 +86,7 @@
 
   const state = {
     collapsed: false,
-    filterQuestionsOnly: false
+    theme: "dark"
   };
 
   const SHOW_TIME = false; // (hidden per your request)
@@ -190,8 +190,7 @@
     sidebar.innerHTML = `
       <div id="qsb-header">
         <div id="qsb-title">Questions</div>
-        <button class="qsb-btn" id="qsb-filter">Filter ?</button>
-        <button class="qsb-btn" id="qsb-export">Export</button>
+        <button class="qsb-btn" id="qsb-theme">Light</button>
         <button class="qsb-btn" id="qsb-hide">Hide</button>
       </div>
       <div id="qsb-list" role="list"></div>
@@ -201,17 +200,14 @@
 
     listEl = sidebar.querySelector("#qsb-list");
     sidebar.querySelector("#qsb-hide").addEventListener("click", collapseSidebar);
-    sidebar.querySelector("#qsb-export").addEventListener("click", exportQuestions);
-    sidebar.querySelector("#qsb-filter").addEventListener("click", () => {
-      state.filterQuestionsOnly = !state.filterQuestionsOnly;
-      renderList();
-      try { chrome.storage?.sync.set({ qsb_filter: state.filterQuestionsOnly }); } catch {}
-    });
+    sidebar.querySelector("#qsb-theme").addEventListener("click", toggleTheme);
+    
 
     try {
-      chrome.storage?.sync.get(["qsb_collapsed", "qsb_filter"], (res) => {
+      chrome.storage?.sync.get(["qsb_collapsed", "qsb_theme"], (res) => {
         if (typeof res.qsb_collapsed === "boolean" && res.qsb_collapsed) collapseSidebar();
-        if (typeof res.qsb_filter === "boolean") state.filterQuestionsOnly = res.qsb_filter;
+        if (res.qsb_theme === "light" || res.qsb_theme === "dark") state.theme = res.qsb_theme;
+        applyTheme();
         renderList();
       });
     } catch {}
@@ -237,15 +233,19 @@
     try { chrome.storage?.sync.set({ qsb_collapsed: false }); } catch {}
   }
 
-  function exportQuestions() {
-    const texts = entries.map(e => e.text);
-    const blob = new Blob([texts.join("\n")], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "questions.txt";
-    a.click();
-    URL.revokeObjectURL(url);
+  
+
+  function applyTheme() {
+    const isLight = state.theme === "light";
+    document.documentElement.classList.toggle("qsb-light", isLight);
+    const btn = sidebar?.querySelector("#qsb-theme");
+    if (btn) btn.textContent = isLight ? "Dark" : "Light";
+  }
+
+  function toggleTheme() {
+    state.theme = state.theme === "light" ? "dark" : "light";
+    applyTheme();
+    try { chrome.storage?.sync.set({ qsb_theme: state.theme }); } catch {}
   }
 
   // ---------------- Indexing ----------------
@@ -453,11 +453,7 @@
     if (!listEl) return;
     listEl.innerHTML = "";
 
-    const show = state.filterQuestionsOnly
-      ? entries.filter(e => /\?/.test(e.text))
-      : entries;
-
-    show.forEach((e, i) => {
+    entries.forEach((e, i) => {
       const item = document.createElement("div");
       item.className = "qsb-item";
       item.setAttribute("role", "listitem");
