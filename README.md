@@ -2,6 +2,10 @@
 
 A Chrome extension that intelligently extracts and organizes questions from ChatGPT conversations, providing quick navigation and persistent storage across chat sessions.
 
+## Demo
+
+![Demo](https://github.com/ibrmaj/gpt-sidebar/blob/main/WhatsApp%20Video%202025-08-27%20at%2022.31.45.gif)
+
 ## Features
 
 - **Smart Question Detection**: Automatically identifies and indexes user questions from ChatGPT conversations
