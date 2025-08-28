@@ -178,6 +178,49 @@
   }
 
   // ---------------- UI ----------------
+  function makeDraggable(handle) {
+    let dragging = false, startX = 0, startY = 0, startLeft = 0, startTop = 0;
+  
+    handle.style.cursor = "move";
+  
+    handle.addEventListener("mousedown", (e) => {
+      if (e.button !== 0) return; // left mouse only
+      dragging = true;
+  
+      const rect = sidebar.getBoundingClientRect();
+      startX = e.clientX;
+      startY = e.clientY;
+      startLeft = rect.left;
+      startTop = rect.top;
+  
+      // switch to left-positioning while dragging
+      sidebar.style.left = `${rect.left}px`;
+      sidebar.style.top = `${rect.top}px`;
+      sidebar.style.right = "auto";
+  
+      document.body.style.userSelect = "none";
+    });
+  
+    window.addEventListener("mousemove", (e) => {
+      if (!dragging) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+  
+      // keep it within the viewport
+      const newLeft = Math.min(window.innerWidth - 80, Math.max(0, startLeft + dx));
+      const newTop  = Math.min(window.innerHeight - 80, Math.max(0, startTop + dy));
+  
+      sidebar.style.left = `${newLeft}px`;
+      sidebar.style.top  = `${newTop}px`;
+    });
+  
+    window.addEventListener("mouseup", () => {
+      if (!dragging) return;
+      dragging = false;
+      document.body.style.userSelect = "";
+    });
+  }
+  
   function injectSidebar() {
     toggleBtn = document.createElement("button");
     toggleBtn.id = "qsb-toggle";
@@ -194,7 +237,7 @@
         <button class="qsb-btn" id="qsb-hide">Hide</button>
       </div>
       <div id="qsb-list" role="list"></div>
-      <div class="qsb-footer">New questions are captured automatically. Resize from the bottom right edge.</div>
+      <div class="qsb-footer">New questions are captured automatically. Resize from the bottom left edge.</div>
     `;
     document.documentElement.appendChild(sidebar);
 
@@ -211,6 +254,10 @@
         renderList();
       });
     } catch {}
+
+    const headerEl = sidebar.querySelector("#qsb-header");
+    makeDraggable(headerEl);
+
   }
 
   function toggleSidebar() {

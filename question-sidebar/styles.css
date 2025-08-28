@@ -5,7 +5,7 @@
     right: 0;
     width: 320px;
     max-width: 80vw;
-    height: calc(100vh - 80px);
+    height: 70vh;
     background: #0f172a;   /* slate-900 */
     color: #e2e8f0;        /* slate-200 */
     border-left: 1px solid #1f2937; /* gray-800 */
@@ -15,7 +15,8 @@
     font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
     box-shadow: -8px 0 16px rgba(0,0,0,0.25);
     overflow: hidden;
-    resize: horizontal;
+    resize: both;
+    direction: rtl;
   }
 
   /* Light theme overrides (applied when documentElement has .qsb-light) */
@@ -37,12 +38,14 @@
   /* Header */
   #qsb-header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     gap: 8px;
     padding: 10px 12px;
     border-bottom: 1px solid #1f2937;
     background: #111827; /* gray-900 */
     user-select: none;
+    direction: ltr; 
   }
   
   #qsb-title {
@@ -71,6 +74,7 @@
     flex: 1;
     overflow: auto;
     padding: 8px;
+    direction: ltr;
   }
   
   .qsb-item {
@@ -99,6 +103,8 @@
   
   .qsb-footer {
     padding: 8px 10px;
+    direction: ltr;             
+    text-align: left;
     border-top: 1px solid #1f2937;
     background: #0b1220;
     font-size: 12px;
