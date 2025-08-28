@@ -4,7 +4,7 @@ A Chrome extension that intelligently extracts and organizes questions from Chat
 
 ## Demo
 
-https://github.com/majidism006/gpt-sidebar/assets/123456789/demo-video.mp4
+![Demo](https://github.com/ibrmaj/gpt-sidebar/blob/main/WhatsApp%20Video%202025-08-27%20at%2022.31.45.gif)
 
 ## Features
 
