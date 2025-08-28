@@ -194,7 +194,7 @@
         <button class="qsb-btn" id="qsb-hide">Hide</button>
       </div>
       <div id="qsb-list" role="list"></div>
-      <div class="qsb-footer">New questions are captured automatically. Resize from the left edge.</div>
+      <div class="qsb-footer">New questions are captured automatically. Resize from the bottom right edge.</div>
     `;
     document.documentElement.appendChild(sidebar);
 
